@@ -11,8 +11,6 @@ export async function POST(req: NextRequest) {
 
   const existedWord = await prisma.correct.findFirst({ where: { eng: data.eng } })
 
-  console.log(existedWord)
-
   if (existedWord) {
     return new Response(`Таке слово вже існує в словнику`, { status: 400 })
   }

@@ -6,7 +6,7 @@ const CorrectPage = () => {
   return (
     <>
       <Button variant="outline" className="w-full mb-4">
-        Очистити
+        Очистити всі
       </Button>
 
       <Table>
