@@ -14,7 +14,7 @@ const Header = () => {
   const pathname = usePathname()
 
   return (
-    <header className="py-4 bg-muted flex justify-center sticky top-0 z-10" style={{ overflowY: 'auto' }}>
+    <header className="py-4 bg-muted flex justify-center sticky top-0 z-10 header" style={{ overflowY: 'auto' }}>
       <Tabs defaultValue="account" className="w-[400px]" value={pathname}>
         <TabsList>
           {pages.map((el) => (

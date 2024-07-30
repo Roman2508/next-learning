@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/prisma/prisma-client'
+import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET() {
   const words = await prisma.word.findMany()
@@ -12,3 +12,7 @@ export async function POST(req: NextRequest) {
   return NextResponse.json(word)
 }
 
+export async function DELETE() {
+  await prisma.word.deleteMany({})
+  return NextResponse.json({ status: 'SUCCESS' })
+}
