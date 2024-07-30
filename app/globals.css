@@ -101,14 +101,13 @@ body {
     flex-direction: column;
   }
   .home-buttons button {
-    width: 80% !important;
+    width: 100% !important;
     margin: 0 !important;
   }
 
   .home-inputs {
-    max-width: 80%;
-    margin-left: auto;
-    margin-right: auto;
+    max-width: 100%;
+    margin: 0 auto 25px;
   }
 
   .all-words-buttons {
@@ -145,16 +144,6 @@ body {
   .words-table button svg {
     width: 14px;
     height: 14px;
-  }
-}
-
-@media (max-width: 380px) {
-  .home-buttons button {
-    width: 100% !important;
-  }
-
-  .home-inputs {
-    max-width: 100%;
   }
 }
 
