@@ -205,7 +205,7 @@ export default function Home() {
               {isShowBothWords ? "Cховати переклад" : "Показати переклад"}
             </Button>
 
-            <Button style={{ width: "160px", marginLeft: "20px" }} onClick={onVerifyWords}>
+            <Button style={{ width: "160px", marginLeft: "20px" }} onClick={onVerifyWords} disabled={!answer}>
               Перевірити
             </Button>
           </div>
