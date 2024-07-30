@@ -95,6 +95,36 @@ export default function Home() {
     }
   }
 
+  const handlePrevious = () => {
+    setCorrect(null)
+    setAnswer("")
+
+    if (currentPage > 1) {
+      if (correct) {
+        clearWordFromAvailable()
+        setCurrentPage(currentPage - 1)
+        return
+      }
+
+      setCurrentPage(currentPage - 1)
+    }
+  }
+
+  const handleNext = () => {
+    setCorrect(null)
+    setAnswer("")
+
+    if (currentPage < availableWords.length) {
+      if (correct) {
+        clearWordFromAvailable()
+        setCurrentPage(currentPage)
+        return
+      }
+
+      setCurrentPage(currentPage + 1)
+    }
+  }
+
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -169,7 +199,9 @@ export default function Home() {
                 readOnly={translationType === "ua_eng"}
                 onKeyDown={(e) => {
                   if (e.key === "Enter") onVerifyWords()
-                  if (e.key === "Shift") console.log(1)
+                  if (e.key === "ArrowRight") handleNext()
+                  if (e.key === "ArrowLeft") handlePrevious()
+                  if (e.key === "ArrowUp") setIsShowBothWords((prev) => !prev)
                 }}
                 onChange={(e) => setAnswer(e.target.value)}
                 value={
@@ -191,13 +223,10 @@ export default function Home() {
           </div>
 
           <Pagination
-            correct={correct}
-            setAnswer={setAnswer}
-            setCorrect={setCorrect}
+            handleNext={handleNext}
             currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
+            handlePrevious={handlePrevious}
             totalPages={availableWords.length}
-            clearWordFromAvailable={clearWordFromAvailable}
           />
 
           <div className="mt-6 mb-10 text-center home-buttons">
