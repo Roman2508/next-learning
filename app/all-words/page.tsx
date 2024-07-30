@@ -86,7 +86,7 @@ export default function AllWordsPage() {
   }
 
   const onClickDelete = async (id: number) => {
-    if (!id || !window.confirm('Ви дійсно хочете видалити слово?')) return
+    if (!id || !window?.confirm('Ви дійсно хочете видалити слово?')) return
 
     const word = await Api.words.deleteWord(id)
     deleteWord(word)

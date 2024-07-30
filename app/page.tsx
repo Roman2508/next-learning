@@ -21,11 +21,8 @@ export default function Home() {
   const [currentPage, setCurrentPage] = React.useState(1)
   const [isShowBothWords, setIsShowBothWords] = React.useState(false)
   const [translationType, setTranslationType] = React.useState('eng_ua')
-  const [wordsToShow, setWordsToShow] = React.useState(Number(window.localStorage.getItem('next-learning')) || 1)
-  // Слова, яких немає в correct або not-correct
+  const [wordsToShow, setWordsToShow] = React.useState(Number(window?.localStorage.getItem('next-learning')) || 1)
   const [availableWords, setAvailableWords] = React.useState<Word[]>([])
-  // Випадкові слова
-  const [randomWords, setRandomWords] = React.useState<Word[]>([])
   const [correct, setCorrect] = React.useState<'correct' | 'not-correct' | null>(null)
 
   const { words, setWords } = useWordsStore()
@@ -33,12 +30,12 @@ export default function Home() {
   const { words: notCorrectWords, setWords: setNotCorrectWords } = useNotCorrectWordsStore()
 
   const handleChangeWordsCount = (value: number[]) => {
-    window.localStorage.setItem('next-learning', JSON.stringify(value[0]))
+    window?.localStorage.setItem('next-learning', JSON.stringify(value[0]))
     setWordsToShow(value[0])
   }
 
   const handleRandomWords = (allWords?: Word[], correct?: Word[], notCorrect?: Word[]) => {
-    const count = window.localStorage.getItem('next-learning')
+    const count = window?.localStorage.getItem('next-learning')
     const wordsCount = count ? Number(count) : 10
 
     let availableWords: Word[] = []
