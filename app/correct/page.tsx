@@ -12,7 +12,7 @@ import { sortItemsByKey } from '@/helpers/sortItemsByKey'
 import { searchItemsByField } from '@/helpers/searchItemsByField'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-const CorrectPage = () => {
+export default function CorrectPage() {
   const [search, setSearch] = React.useState('')
   const [sort, setSort] = React.useState({ key: 'eng', order: 'asc' as 'asc' | 'desc' })
 
@@ -114,5 +114,3 @@ const CorrectPage = () => {
     </>
   )
 }
-
-export default CorrectPage

@@ -12,7 +12,7 @@ import { useNotCorrectWordsStore } from '@/store/not-correct'
 import { searchItemsByField } from '@/helpers/searchItemsByField'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
-const NotCorrectPage = () => {
+export default function NotCorrectPage() {
   const [search, setSearch] = React.useState('')
   const [sort, setSort] = React.useState({ key: 'eng', order: 'asc' as 'asc' | 'desc' })
 
@@ -114,5 +114,3 @@ const NotCorrectPage = () => {
     </>
   )
 }
-
-export default NotCorrectPage

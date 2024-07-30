@@ -112,17 +112,6 @@ export default function Home() {
     fetchData()
   }, [])
 
-  console.log(
-    'words:',
-    words,
-    'correct:',
-    correctWords,
-    'not:',
-    notCorrectWords,
-    'available:',
-    checkAvailableWords(words, correctWords, notCorrectWords)
-  )
-
   return (
     <main>
       {isLoading ? (

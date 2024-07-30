@@ -15,7 +15,7 @@ import { searchItemsByField } from '@/helpers/searchItemsByField'
 
 const initialWordState = { eng: '', ua: '' }
 
-const AllWordsPage = () => {
+export default function AllWordsPage() {
   const [search, setSearch] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(false)
   const [newWord, setNewWord] = React.useState(initialWordState)
@@ -213,5 +213,3 @@ const AllWordsPage = () => {
     </>
   )
 }
-
-export default AllWordsPage
