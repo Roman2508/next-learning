@@ -72,6 +72,11 @@
   display: flex;
 }
 
+html,
+body {
+  scroll-behavior: smooth;
+}
+
 @media (max-width: 500px) {
   .container {
     padding-right: 1rem;

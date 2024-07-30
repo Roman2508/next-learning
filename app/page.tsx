@@ -160,6 +160,10 @@ export default function Home() {
                 autoComplete="off"
                 disabled={translationType === 'ua_eng'}
                 readOnly={translationType === 'ua_eng'}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') onVerifyWords()
+                  if (e.key === 'Shift') console.log(1)
+                }}
                 onChange={(e) => setAnswer(e.target.value)}
                 value={
                   isShowBothWords
@@ -235,7 +239,13 @@ export default function Home() {
           </div>
 
           <div className="flex justify-center my-5">
-            <Button onClick={() => handleRandomWords()} variant="outline">
+            <Button
+              onClick={() => {
+                setCurrentPage(1)
+                handleRandomWords()
+              }}
+              variant="outline"
+            >
               Показати
             </Button>
           </div>

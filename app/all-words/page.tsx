@@ -1,6 +1,6 @@
 'use client'
 import React from 'react'
-import { Pencil as EditIcon, Trash2 as DeleteIcon, MoveDown, MoveUp } from 'lucide-react'
+import { Pencil as EditIcon, Trash2 as DeleteIcon, MoveDown, MoveUp, Trash2 } from 'lucide-react'
 
 import { Api } from '@/services/api-client'
 import { Label } from '@/components/ui/label'
@@ -67,6 +67,7 @@ export default function AllWordsPage() {
   }
 
   const onClickEdit = (word: Word) => {
+    window.scrollTo(0, 0)
     setActionType('update')
     setEditedWordId(word.id)
     setNewWord({ eng: word.eng, ua: word.ua })
@@ -90,6 +91,13 @@ export default function AllWordsPage() {
 
     const word = await Api.words.deleteWord(id)
     deleteWord(word)
+  }
+
+  const onClickDeleteAll = async () => {
+    if (!window?.confirm('Ви дійсно хочете видалити всі слова?')) return
+
+    await Api.words.deleteAll()
+    setWords([])
   }
 
   return (
@@ -159,6 +167,10 @@ export default function AllWordsPage() {
         </div>
 
         <ImportWords />
+
+        <Button onClick={onClickDeleteAll} variant="outline" size="icon" className="min-w-[40px] h-[40px]">
+          <Trash2 size={20} />
+        </Button>
       </div>
 
       {words.length > 0 && <p className="text-center pb-4">Всього слів: {words.length}</p>}
