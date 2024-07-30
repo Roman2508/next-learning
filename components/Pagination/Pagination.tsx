@@ -1,17 +1,9 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 
-import {
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationContent,
-  PaginationPrevious,
-  Pagination as PaginationShadCN,
-} from '@/components/ui/pagination'
-import { PageButton } from './PageButton'
 import { NextButton } from './NextButton'
 import { PrevButton } from './PrevButton'
+import { PaginationContent, Pagination as PaginationShadCN } from '@/components/ui/pagination'
 
 interface IPaginationProps {
   totalPages: number
@@ -26,15 +18,11 @@ interface IPaginationProps {
 const Pagination: React.FC<IPaginationProps> = React.memo((props) => {
   const { correct, setAnswer, setCorrect, totalPages, currentPage, setCurrentPage, clearWordFromAvailable } = props
 
-  const [itemOffset, setItemOffset] = React.useState(0)
-
-  const endOffset = itemOffset + 1
   const pageCount = totalPages
 
   const handlePageClick = (event: { selected: number }) => {
     const newOffset = (event.selected * 1) % totalPages
     console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`)
-    setItemOffset(newOffset)
   }
 
   const handlePrevious = () => {

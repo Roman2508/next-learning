@@ -2,16 +2,16 @@
 import React from 'react'
 import { Pencil as EditIcon, Trash2 as DeleteIcon, MoveDown, MoveUp, Trash2 } from 'lucide-react'
 
+import { Word } from '@prisma/client'
 import { Api } from '@/services/api-client'
 import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useWordsStore } from '@/store/all-words'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
-import { Word } from '@prisma/client'
 import { ImportWords } from '@/components/ImportWords'
 import { sortItemsByKey } from '@/helpers/sortItemsByKey'
 import { searchItemsByField } from '@/helpers/searchItemsByField'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table'
 
 const initialWordState = { eng: '', ua: '' }
 
