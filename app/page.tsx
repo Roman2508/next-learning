@@ -65,7 +65,7 @@ export default function Home() {
     const word = { eng: availableWords[currentPage - 1].eng, ua: availableWords[currentPage - 1].ua }
 
     if (translationType === 'eng_ua') {
-      if (answer.toLocaleLowerCase() === availableWords[currentPage - 1].ua.toLocaleLowerCase()) {
+      if (answer.toLocaleLowerCase().replace(/\s/g, '') === availableWords[currentPage - 1].ua.toLocaleLowerCase()) {
         await Api.correctWords.createWord(word)
         setCorrect('correct')
         return
@@ -77,7 +77,7 @@ export default function Home() {
     }
 
     if (translationType === 'ua_eng') {
-      if (answer.toLocaleLowerCase() === availableWords[currentPage - 1].eng.toLocaleLowerCase()) {
+      if (answer.toLocaleLowerCase().replace(/\s/g, '') === availableWords[currentPage - 1].eng.toLocaleLowerCase()) {
         await Api.correctWords.createWord(word)
         setCorrect('correct')
         return
