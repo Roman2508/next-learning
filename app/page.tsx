@@ -1,45 +1,45 @@
-'use client'
-import React from 'react'
+"use client"
+import React from "react"
 
-import { Word } from '@prisma/client'
-import { Api } from '@/services/api-client'
-import { Label } from '@/components/ui/label'
-import { Input } from '@/components/ui/input'
-import { Button } from '@/components/ui/button'
-import { Slider } from '@/components/ui/slider'
-import { useWordsStore } from '@/store/all-words'
-import { useCorrectWordsStore } from '@/store/correct'
-import { getRandomWords } from '@/helpers/getRandomWords'
-import Pagination from '@/components/Pagination/Pagination'
-import { useNotCorrectWordsStore } from '@/store/not-correct'
-import checkAvailableWords from '@/helpers/checkAvailableWords'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Word } from "@prisma/client"
+import { Api } from "@/services/api-client"
+import { Label } from "@/components/ui/label"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { Slider } from "@/components/ui/slider"
+import { useWordsStore } from "@/store/all-words"
+import { useCorrectWordsStore } from "@/store/correct"
+import { getRandomWords } from "@/helpers/getRandomWords"
+import Pagination from "@/components/Pagination/Pagination"
+import { useNotCorrectWordsStore } from "@/store/not-correct"
+import checkAvailableWords from "@/helpers/checkAvailableWords"
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 
 export default function Home() {
-  const [answer, setAnswer] = React.useState('')
+  const [answer, setAnswer] = React.useState("")
   const [isLoading, setIsLoading] = React.useState(false)
   const [currentPage, setCurrentPage] = React.useState(1)
   const [isShowBothWords, setIsShowBothWords] = React.useState(false)
-  const [translationType, setTranslationType] = React.useState('eng_ua')
+  const [translationType, setTranslationType] = React.useState("eng_ua")
   const [wordsToShow, setWordsToShow] = React.useState(
-    typeof window !== 'undefined' ? Number(window.localStorage.getItem('next-learning')) : 1
+    typeof window !== "undefined" ? Number(window.localStorage.getItem("next-learning")) : 1
   )
   const [availableWords, setAvailableWords] = React.useState<Word[]>([])
-  const [correct, setCorrect] = React.useState<'correct' | 'not-correct' | null>(null)
+  const [correct, setCorrect] = React.useState<"correct" | "not-correct" | null>(null)
 
   const { words, setWords } = useWordsStore()
   const { words: correctWords, setWords: setCorrectWords } = useCorrectWordsStore()
   const { words: notCorrectWords, setWords: setNotCorrectWords } = useNotCorrectWordsStore()
 
   const handleChangeWordsCount = (value: number[]) => {
-    if (typeof window === 'undefined') return
-    window.localStorage.setItem('next-learning', JSON.stringify(value[0]))
+    if (typeof window === "undefined") return
+    window.localStorage.setItem("next-learning", JSON.stringify(value[0]))
     setWordsToShow(value[0])
   }
 
   const handleRandomWords = (allWords?: Word[], correct?: Word[], notCorrect?: Word[]) => {
-    if (typeof window === 'undefined') return
-    const count = window.localStorage.getItem('next-learning')
+    if (typeof window === "undefined") return
+    const count = window.localStorage.getItem("next-learning")
     const wordsCount = count ? Number(count) : 10
 
     let availableWords: Word[] = []
@@ -64,27 +64,34 @@ export default function Home() {
     // @ts-ignore
     const word = { eng: availableWords[currentPage - 1].eng, ua: availableWords[currentPage - 1].ua }
 
-    if (translationType === 'eng_ua') {
-      if (answer.toLocaleLowerCase().replace(/\s/g, '') === availableWords[currentPage - 1].ua.toLocaleLowerCase()) {
+    let ans = answer
+
+    if (answer.endsWith(" ")) {
+      // Убираем последний символ
+      ans = answer.slice(0, -1)
+    }
+
+    if (translationType === "eng_ua") {
+      if (ans.toLocaleLowerCase() === availableWords[currentPage - 1].ua.toLocaleLowerCase()) {
         await Api.correctWords.createWord(word)
-        setCorrect('correct')
+        setCorrect("correct")
         return
       }
 
       await Api.notCorrectWords.createWord(word)
-      setCorrect('not-correct')
+      setCorrect("not-correct")
       return
     }
 
-    if (translationType === 'ua_eng') {
-      if (answer.toLocaleLowerCase().replace(/\s/g, '') === availableWords[currentPage - 1].eng.toLocaleLowerCase()) {
+    if (translationType === "ua_eng") {
+      if (ans.toLocaleLowerCase().replace(/\s/g, "") === availableWords[currentPage - 1].eng.toLocaleLowerCase()) {
         await Api.correctWords.createWord(word)
-        setCorrect('correct')
+        setCorrect("correct")
         return
       }
 
       await Api.notCorrectWords.createWord(word)
-      setCorrect('not-correct')
+      setCorrect("not-correct")
     }
   }
 
@@ -129,21 +136,21 @@ export default function Home() {
                 type="text"
                 className="w-full"
                 autoComplete="off"
-                disabled={translationType === 'eng_ua'}
-                readOnly={translationType === 'eng_ua'}
+                disabled={translationType === "eng_ua"}
+                readOnly={translationType === "eng_ua"}
                 onChange={(e) => setAnswer(e.target.value)}
                 value={
                   isShowBothWords
                     ? availableWords[currentPage - 1]?.eng
-                    : translationType !== 'eng_ua'
+                    : translationType !== "eng_ua"
                     ? answer
-                    : availableWords[currentPage - 1]?.eng || ''
+                    : availableWords[currentPage - 1]?.eng || ""
                 }
                 style={
-                  correct === 'correct'
-                    ? { borderColor: 'rgba(0, 255, 0, 0.4)', borderWidth: '2px' }
-                    : correct === 'not-correct'
-                    ? { borderColor: 'rgba(255, 0, 0, 0.4)', borderWidth: '2px' }
+                  correct === "correct"
+                    ? { borderColor: "rgba(0, 255, 0, 0.4)", borderWidth: "2px" }
+                    : correct === "not-correct"
+                    ? { borderColor: "rgba(255, 0, 0, 0.4)", borderWidth: "2px" }
                     : {}
                 }
               />
@@ -158,25 +165,25 @@ export default function Home() {
                 type="text"
                 className="w-full"
                 autoComplete="off"
-                disabled={translationType === 'ua_eng'}
-                readOnly={translationType === 'ua_eng'}
+                disabled={translationType === "ua_eng"}
+                readOnly={translationType === "ua_eng"}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter') onVerifyWords()
-                  if (e.key === 'Shift') console.log(1)
+                  if (e.key === "Enter") onVerifyWords()
+                  if (e.key === "Shift") console.log(1)
                 }}
                 onChange={(e) => setAnswer(e.target.value)}
                 value={
                   isShowBothWords
                     ? availableWords[currentPage - 1]?.ua
-                    : translationType !== 'ua_eng'
+                    : translationType !== "ua_eng"
                     ? answer
-                    : availableWords[currentPage - 1]?.ua || ''
+                    : availableWords[currentPage - 1]?.ua || ""
                 }
                 style={
-                  correct === 'correct'
-                    ? { borderColor: 'rgba(0, 255, 0, 0.4)', borderWidth: '2px' }
-                    : correct === 'not-correct'
-                    ? { borderColor: 'rgba(255, 0, 0, 0.4)', borderWidth: '2px' }
+                  correct === "correct"
+                    ? { borderColor: "rgba(0, 255, 0, 0.4)", borderWidth: "2px" }
+                    : correct === "not-correct"
+                    ? { borderColor: "rgba(255, 0, 0, 0.4)", borderWidth: "2px" }
                     : {}
                 }
               />
@@ -195,10 +202,10 @@ export default function Home() {
 
           <div className="mt-6 mb-10 text-center home-buttons">
             <Button variant="secondary" className="w[200]" onClick={() => setIsShowBothWords((prev) => !prev)}>
-              {isShowBothWords ? 'Cховати переклад' : 'Показати переклад'}
+              {isShowBothWords ? "Cховати переклад" : "Показати переклад"}
             </Button>
 
-            <Button style={{ width: '160px', marginLeft: '20px' }} onClick={onVerifyWords}>
+            <Button style={{ width: "160px", marginLeft: "20px" }} onClick={onVerifyWords}>
               Перевірити
             </Button>
           </div>
@@ -208,22 +215,22 @@ export default function Home() {
               <div
                 className="flex items-center space-x-2"
                 onClick={() => {
-                  setAnswer('')
-                  setTranslationType('eng_ua')
+                  setAnswer("")
+                  setTranslationType("eng_ua")
                 }}
               >
                 <RadioGroupItem value="eng_ua" id="eng_ua" />
-                <Label htmlFor="eng_ua">{'Переклад ENG => UA'}</Label>
+                <Label htmlFor="eng_ua">{"Переклад ENG => UA"}</Label>
               </div>
               <div
                 className="flex items-center space-x-2"
                 onClick={() => {
-                  setAnswer('')
-                  setTranslationType('ua_eng')
+                  setAnswer("")
+                  setTranslationType("ua_eng")
                 }}
               >
                 <RadioGroupItem value="ua_eng" id="ua_eng" />
-                <Label htmlFor="ua_eng">{'Переклад UA => ENG'}</Label>
+                <Label htmlFor="ua_eng">{"Переклад UA => ENG"}</Label>
               </div>
             </RadioGroup>
           </div>
